@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/universe1" />
+
 
     <EditText
         android:id="@+id/Word_Input_View"
@@ -16,29 +21,22 @@
         android:layout_marginTop="50dp"
         android:hint="@string/Word_Input"
         android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="#00BCD4"
+        android:textColorHint="#00BCD4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="o" />
 
 
     <TextView
-        android:id="@+id/Word_Input_Blank_View"
-        android:layout_width="231dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/Put_in_your_search_keyword_here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
         android:id="@+id/Select_EN_Dictionary_Provider_View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Select_EN_Dictionary_Provider"
+        android:textColor="#FFC107"
+        android:textSize="15.5sp"
         app:layout_constraintStart_toStartOf="@+id/Word_Input_View"
         app:layout_constraintTop_toBottomOf="@+id/Word_Input_View" />
 
@@ -47,20 +45,22 @@
         android:id="@+id/Select_JP_Dictionary_Provider_View"
         android:layout_width="188dp"
         android:layout_height="21dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Select_JP_Dictionary_Provider"
-        app:layout_constraintEnd_toEndOf="@+id/Select_EN_Dictionary_Provider_View"
-        app:layout_constraintStart_toStartOf="@+id/Word_Input_View"
+        android:textColor="#FFC107"
+        android:textSize="15.5sp"
+        app:layout_constraintStart_toStartOf="@+id/Select_EN_Dictionary_Provider_View"
         app:layout_constraintTop_toBottomOf="@+id/Select_EN_Dictionary_Provider_View" />
 
     <TextView
         android:id="@+id/Select_Sentence_Searcher_View"
         android:layout_width="188dp"
         android:layout_height="21dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Select_Sentence_Searcher"
-        app:layout_constraintEnd_toEndOf="@+id/Select_EN_Dictionary_Provider_View"
-        app:layout_constraintStart_toStartOf="@+id/Word_Input_View"
+        android:textColor="#FFC107"
+        android:textSize="15.5sp"
+        app:layout_constraintStart_toStartOf="@+id/Select_Google_Word_Searcher_View"
         app:layout_constraintTop_toBottomOf="@+id/Select_Google_Word_Searcher_View" />
 
 
@@ -68,10 +68,11 @@
         android:id="@+id/Select_Google_Word_Searcher_View"
         android:layout_width="188dp"
         android:layout_height="21dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Select_Google_Word_Searcher"
-        app:layout_constraintEnd_toEndOf="@+id/Select_EN_Dictionary_Provider_View"
-        app:layout_constraintStart_toStartOf="@+id/Word_Input_View"
+        android:textColor="#FFC107"
+        android:textSize="15.5sp"
+        app:layout_constraintStart_toStartOf="@+id/Select_JP_Dictionary_Provider_View"
         app:layout_constraintTop_toBottomOf="@+id/Select_JP_Dictionary_Provider_View" />
 
 
@@ -79,10 +80,11 @@
         android:id="@+id/Miscellaneous_View"
         android:layout_width="188dp"
         android:layout_height="21dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Miscellaneous"
-        app:layout_constraintEnd_toEndOf="@+id/Select_EN_Dictionary_Provider_View"
-        app:layout_constraintStart_toStartOf="@+id/Word_Input_View"
+        android:textColor="#FFC107"
+        android:textSize="15.5sp"
+        app:layout_constraintStart_toStartOf="@+id/Select_Sentence_Searcher_View"
         app:layout_constraintTop_toBottomOf="@+id/Select_Sentence_Searcher_View" />
 
 
@@ -90,8 +92,11 @@
         android:id="@+id/EN_dictionary_providers_spinner"
         android:layout_width="162dp"
         android:layout_height="23dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#bec2be"
         app:layout_constraintBottom_toBottomOf="@+id/Select_EN_Dictionary_Provider_View"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Select_EN_Dictionary_Provider_View" />
 
 
@@ -99,9 +104,11 @@
         android:id="@+id/JP_dictionary_providers_spinner"
         android:layout_width="157dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#bec2be"
         app:layout_constraintBottom_toBottomOf="@+id/Select_JP_Dictionary_Provider_View"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
-        app:layout_constraintStart_toStartOf="@+id/EN_dictionary_providers_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Select_JP_Dictionary_Provider_View" />
 
 
@@ -109,9 +116,11 @@
         android:id="@+id/Sentence_searcher_spinner"
         android:layout_width="157dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#bec2be"
         app:layout_constraintBottom_toBottomOf="@+id/Select_Sentence_Searcher_View"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
-        app:layout_constraintStart_toStartOf="@+id/EN_dictionary_providers_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Select_Sentence_Searcher_View" />
 
 
@@ -119,9 +128,11 @@
         android:id="@+id/Google_word_searcher_spinner"
         android:layout_width="157dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#bec2be"
         app:layout_constraintBottom_toBottomOf="@+id/Select_Google_Word_Searcher_View"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
-        app:layout_constraintStart_toStartOf="@+id/EN_dictionary_providers_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Select_Google_Word_Searcher_View" />
 
 
@@ -129,20 +140,12 @@
         android:id="@+id/Miscellaneous_searcher_spinner"
         android:layout_width="157dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#bec2be"
         app:layout_constraintBottom_toBottomOf="@+id/Miscellaneous_View"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
-        app:layout_constraintStart_toStartOf="@+id/EN_dictionary_providers_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Miscellaneous_View" />
-
-
-    <Button
-        android:id="@+id/Search_button"
-        android:layout_width="84dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/Search"
-        app:layout_constraintEnd_toEndOf="@+id/Word_Input_Blank_View"
-        app:layout_constraintTop_toBottomOf="@+id/Miscellaneous_searcher_spinner" />
 
 
 </android.support.constraint.ConstraintLayout>

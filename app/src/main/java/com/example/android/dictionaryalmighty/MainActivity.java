@@ -139,6 +139,16 @@ public class MainActivity extends AppCompatActivity {
                     web.putExtra(key, "http://www.yiym.com/?s="+searchKeyword);
                     startActivity(web);
 
+                }else if (position == 19) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://tw.voicetube.com/definition/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 20) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://youglish.com/search/"+searchKeyword+"/all?");
+                    startActivity(web);
+
                 }
 
                 EnDictionarySpinner.setAdapter(EnDictionarySpinnerAdapter);
@@ -246,12 +256,19 @@ public class MainActivity extends AppCompatActivity {
 
                 }else if (position == 15) {
                     Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://dict.hjenglish.com/jp/jc/"+searchKeyword);
+                    web.putExtra(key, "https://dictionary.goo.ne.jp/srch/jn/"+searchKeyword+"/m0u/");
                     startActivity(web);
 
                 }else if (position == 16) {
                     Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
                     web.putExtra(key, "https://jisho.org/search/"+searchKeyword);
+                    startActivity(web);
+
+                }
+
+                else if (position == 17) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "http://s.jlogos.com/list.html?keyword="+searchKeyword+"&opt_val=0");
                     startActivity(web);
 
                 }

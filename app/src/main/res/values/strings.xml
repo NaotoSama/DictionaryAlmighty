@@ -20,6 +20,8 @@
         <item>@string/Automotive_Dictionary</item>
         <item>@string/National_Academy_for_Educational_Research</item>
         <item>@string/Slang</item>
+        <item>@string/Voicetube</item>
+        <item>@string/YouGlish</item>
     </string-array>
 
 
@@ -39,8 +41,9 @@
         <item>@string/Kanji_Dictionary_Online</item>
         <item>@string/Eijirou</item>
         <item>@string/How_do_you_say_this_in_English</item>
-        <item>@string/Hu_Jiang</item>
+        <item>@string/goo</item>
         <item>@string/Jisho</item>
+        <item>@string/J_Logos</item>
 
     </string-array>
 
@@ -151,8 +154,12 @@
     <string name="Word_Hippo">Word Hippo</string>
     <string name="Weblio_Synonym">Weblio Synonym</string>
     <string name="Jisho">Jisho</string>
-    <string name="Hu_Jiang">HuJiang Dictionary</string>
+    <string name="goo">Goo Dictionary</string>
     <string name="Select_one_of_the_following">Select one of the following</string>
+    <string name="J_Logos">J Logos</string>
+    <string name="YouGlish">YouGlish</string>
+    <string name="Voicetube">Voicetube</string>
+    <string name="Exit_app">Exit App</string>
 
 
 </resources>

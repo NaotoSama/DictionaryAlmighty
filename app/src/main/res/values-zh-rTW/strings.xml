@@ -63,10 +63,14 @@
     <string name="Word_Hippo">Word Hippo</string>
     <string name="Weblio_Synonym">Weblio類語辭典</string>
     <string name="Jisho">Jisho日文讀音</string>
-    <string name="Hu_Jiang">滬江字典</string>
+    <string name="goo">Goo字典</string>
     <string name="Tangorin_Kanji">單語林--漢字</string>
     <string name="Tangorin_Names">單語林--名字</string>
     <string name="Tangorin_Sentence">單語林--句子</string>
     <string name="Word_Cool_JP_CH">句酷 日中中日</string>
     <string name="Select_one_of_the_following">請選擇一項</string>
+    <string name="J_Logos">J Logos</string>
+    <string name="YouGlish">YouGlish</string>
+    <string name="Voicetube">Voicetube英漢字典</string>
+    <string name="Exit_app">退出</string>
 </resources>
