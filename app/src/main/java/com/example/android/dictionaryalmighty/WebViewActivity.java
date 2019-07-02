@@ -17,12 +17,12 @@ import android.widget.ProgressBar;
 
 
 /**
- * Activity for the WebView
+ * 設置網頁框
  */
 public class WebViewActivity extends AppCompatActivity {
 
-    WebView webViewBrowser;
-    ProgressBar progressBar;
+    WebView webViewBrowser; //預設網頁框為空
+    ProgressBar progressBar; //載入網址的進度條
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

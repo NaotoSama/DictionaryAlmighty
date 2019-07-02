@@ -73,4 +73,9 @@
     <string name="YouGlish">YouGlish</string>
     <string name="Voicetube">Voicetube英漢字典</string>
     <string name="Exit_app">退出</string>
+    <string name="SCI_Dictionary">SCI學術字典</string>
+    <string name="DA_JP_TW_Dictionary">DA日中字典</string>
+    <string name="DA_TW_JP_Dictionary">DA中日字典</string>
+    <string name="External_storage_permission">必須允許存取照片的權限才可更換背景圖</string>
+    <string name="Change_background">更換背景</string>
 </resources>
