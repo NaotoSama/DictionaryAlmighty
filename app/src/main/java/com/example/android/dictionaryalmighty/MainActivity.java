@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,21 +25,24 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import pl.droidsonroids.gif.GifImageView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     GifImageView gifImageView; //用來準備給用戶更換背景圖
-    EditText wordInputView;    //關鍵字輸入框
-    String searchKeyword;      //用戶輸入的關鍵字
+    public static EditText wordInputView;    //關鍵字輸入框
+    public static String searchKeyword;      //用戶輸入的關鍵字
     ImageView exitApp;         //退出程式鈕
     ImageView changeBackground;//更換背景鈕
     private static int RESULT_LOAD_IMAGE = 1;
     private static final int WRITE_PERMISSION = 0x01; //用來準備設置運行中的權限要求
     String LOG_TAG;  //Log tag for the external storage permission request error message
-
     public static String key;  //網址的識別key
+    public static String speechAutoTranslationCode; //用於載入自動語音翻譯之網頁的代碼
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)  //要加上這條限定Api等級，requestWritePermission()才不會報錯
@@ -96,6 +100,165 @@ public class MainActivity extends AppCompatActivity {
          * 設置下拉式選單
          */
 
+
+        /**
+         * Speech Recognition Spinner & Spinner Adapters
+         */
+        final Spinner SpeechRecognitionSpinner = findViewById(R.id.Speech_recognition_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        final ArrayAdapter<CharSequence> SpeechRecognitionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.Speech_recognition_spinner_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        SpeechRecognitionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        SpeechRecognitionSpinner.setAdapter(SpeechRecognitionAdapter);
+
+        SpeechRecognitionSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position == 0){     //此行以下設置語音辨識選單
+                    return;
+
+                }
+                if (position == 1){
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_TW");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 2) {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 3){
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_CN");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 4) {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ja_JP");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 5) {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko_KR");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 6) {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "es_ES");
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 10);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else if (position == 7) {    //此行以下設置語音辨識 + 自動翻譯
+                    return;
+
+                }else if (position == 8) {
+                    //傳送Intent跳到WebViewActivity頁面
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="CHtoEN"; //設定一個特定代碼，在下面的onActivityResult執行完畢後，再以此代碼加載其所屬網址，因此不用再設定10秒延遲載入網頁
+
+                }else if (position == 9) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="CHtoJP";
+
+                }else if (position == 10) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="CHtoKR";
+
+                }else if (position == 11) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="CHtoES";
+
+                }else if (position == 12) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="ENtoCH";
+
+                }else if (position == 13) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="JPtoCH";
+
+                }else if (position == 14) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="KRtoCH";
+
+                }else if (position == 15) {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+
+                    speechAutoTranslationCode="EStoCH";
+
+                }
+
+                SpeechRecognitionSpinner.setAdapter(SpeechRecognitionAdapter);
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+
         /**
          * EnDictionarySpinner & Spinner Adapters
          */
@@ -125,93 +288,93 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(web);
 
                 }else if (position == 2) {
-                    Intent web=new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://dictionary.cambridge.org/zht/詞典/英語-漢語-繁體/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 3){
-                    Intent web=new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.merriam-webster.com/dictionary/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 4) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.collinsdictionary.com/dictionary/english/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 5) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://en.oxforddictionaries.com/definition/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 6) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.vocabulary.com/dictionary/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 7) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.dictionary.com/browse/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 8) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.thefreedictionary.com/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 9) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.yourdictionary.com/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 10) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.ldoceonline.com/dictionary/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 11) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "http://dict.site/"+searchKeyword+".html");
-                    startActivity(web);
-
-                }else if (position == 12) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://en.wiktionary.org/wiki/"+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 13) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.wordhippo.com/what-is/another-word-for/"+searchKeyword+".html");
-                    startActivity(web);
-
-                }else if (position == 14) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://www.onelook.com/thesaurus/?s="+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 15) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "http://www.businessdictionary.com/definition/"+searchKeyword+".html");
-                    startActivity(web);
-
-                }else if (position == 16) {
-                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "http://www.agosto.com.tw/dictionary.aspx?search="+searchKeyword);
-                    startActivity(web);
-
-                }else if (position == 17) {
                     Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
                     web.putExtra(key, "http://terms.naer.edu.tw/search/?q="+searchKeyword+"&field=ti&op=AND&group=&num=10");
                     startActivity(web);
 
+                }else if (position == 3) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "http://dict.site/"+searchKeyword+".html");
+                    startActivity(web);
+
+                }else if (position == 4) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://tw.voicetube.com/definition/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 5) {
+                    Intent web=new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://dictionary.cambridge.org/zht/詞典/英語-漢語-繁體/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 6){
+                    Intent web=new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.merriam-webster.com/dictionary/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 7) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.collinsdictionary.com/dictionary/english/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 8) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://en.oxforddictionaries.com/definition/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 9) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.vocabulary.com/dictionary/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 10) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.dictionary.com/browse/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 11) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.thefreedictionary.com/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 12) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.yourdictionary.com/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 13) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.ldoceonline.com/dictionary/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 14) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://en.wiktionary.org/wiki/"+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 15) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.wordhippo.com/what-is/another-word-for/"+searchKeyword+".html");
+                    startActivity(web);
+
+                }else if (position == 16) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://www.onelook.com/thesaurus/?s="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 17) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "http://www.businessdictionary.com/definition/"+searchKeyword+".html");
+                    startActivity(web);
+
                 }else if (position == 18) {
                     Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "http://www.yiym.com/?s="+searchKeyword);
+                    web.putExtra(key, "http://www.agosto.com.tw/dictionary.aspx?search="+searchKeyword);
                     startActivity(web);
 
                 }else if (position == 19) {
                     Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
-                    web.putExtra(key, "https://tw.voicetube.com/definition/"+searchKeyword);
+                    web.putExtra(key, "http://www.yiym.com/?s="+searchKeyword);
                     startActivity(web);
 
                 }else if (position == 20) {
@@ -433,6 +596,36 @@ public class MainActivity extends AppCompatActivity {
                     web.putExtra(key, "http://www.google.com/search?q="+searchKeyword+"+meaning");
                     startActivity(web);
 
+                }else if (position == 10) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=zh-TW&text="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 11) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=zh-CN&text="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 12) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=en&text="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 13) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=ja&text="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 14) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=ko&text="+searchKeyword);
+                    startActivity(web);
+
+                }else if (position == 15) {
+                    Intent web = new Intent(getApplicationContext(), com.example.android.dictionaryalmighty.WebViewActivity.class);
+                    web.putExtra(key, "https://translate.google.com/?hl=zh-TW#view=home&op=translate&sl=auto&tl=es&text="+searchKeyword);
+                    startActivity(web);
+
                 }
 
                 GoogleWordSearchSpinner.setAdapter(GoogleWordSearchSpinnerAdapter);
@@ -591,11 +784,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * 在OnCreate外面設置語音輸入的相關設定
      * 在OnCreate外面另外設置用戶選取背景圖時的相關設定
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //設置語音輸入的相關設定
+        switch (requestCode) {
+            case 10:    //必須等同上面getSpeechInput方法中的requestCode:10
+                if (resultCode == RESULT_OK && data != null) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    wordInputView.setText(result.get(0));
+                }
+                break;
+        }
+
+
+
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };

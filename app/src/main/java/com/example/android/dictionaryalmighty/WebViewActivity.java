@@ -3,6 +3,7 @@ package com.example.android.dictionaryalmighty;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-
+import android.widget.Toast;
+import java.util.ArrayList;
 
 
 /**
@@ -23,6 +25,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     WebView webViewBrowser; //預設網頁框為空
     ProgressBar progressBar; //載入網址的進度條
+    String speechAutoTranslationPageResultCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +65,122 @@ public class WebViewActivity extends AppCompatActivity {
         //Webview裡面的網頁，如果有input需要輸入，但是點上去卻沒反應，輸入法不出來。這種情況是因為webview沒有獲取焦點。
         //需要在java裡面給webview設置一下requestFocus() 就行了。
 
-        Intent intent = getIntent();  //接收來自MainActivity的Intent
+
+
+        //接收來自MainActivity的Intent
+        Intent intent = getIntent();
+
+        //抓speechAutoTranslationCode代碼，跳顯出對應語言的語音辨識視窗
+        if (MainActivity.speechAutoTranslationCode=="CHtoEN") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_TW");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+            speechAutoTranslationPageResultCode="loadCHtoENTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="CHtoJP") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_TW");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode="loadCHtoJPTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="CHtoKR") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_TW");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadCHtoKRTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="CHtoES") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "zh_TW");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadCHtoESTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="ENtoCH") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en_US");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadENtoCHTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="JPtoCH") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ja_JP");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadJPtoCHTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="KRtoCH") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko_KR");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadKRtoCHTranslationPageResult";
+
+        }else if (MainActivity.speechAutoTranslationCode=="EStoCH") {
+            Intent speechRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "es_ES");
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(speechRecognitionIntent, 10);
+            } else {
+                Toast.makeText(getApplicationContext(), "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
+
+            speechAutoTranslationPageResultCode = "loadEStoCHTranslationPageResult";
+
+        }
+
+
+            //抓用戶手動輸入的關鍵字乃至整個網址，然後加載網址
         String url= intent.getExtras().getString(com.example.android.dictionaryalmighty.MainActivity.key);
         webViewBrowser.loadUrl(url);
+
     }
 
 
@@ -94,6 +210,78 @@ public class WebViewActivity extends AppCompatActivity {
             super.onPageFinished(view, url);
 
             progressBar.setVisibility(View.GONE);
+        }
+
+    }
+
+
+    /**
+     * 在OnCreate外面設置語音輸入的相關設定
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //設置語音輸入的相關設定
+        switch (requestCode) {
+            case 10:    //必須等同上面getSpeechInput方法中的requestCode:10
+                if (resultCode == RESULT_OK && data != null) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    MainActivity.wordInputView.setText(result.get(0));
+                }
+                break;
+        }
+
+
+        //抓speechAutoTranslationPageResultCode代碼，然後載入自動語音翻譯的網頁
+        if (speechAutoTranslationPageResultCode=="loadCHtoENTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech1 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=zh-CN&tl=en&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech1);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadCHtoJPTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech2 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=zh-CN&tl=ja&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech2);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadCHtoKRTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech3 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=zh-CN&tl=ko&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech3);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadCHtoESTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech4 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=zh-CN&tl=es&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech4);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadENtoCHTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech5 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=en&tl=zh-TW&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech5);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadJPtoCHTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech6 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=ja&tl=zh-TW&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech6);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadKRtoCHTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech7 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=ko&tl=zh-TW&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech7);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
+        }else if (speechAutoTranslationPageResultCode=="loadEStoCHTranslationPageResult") {
+            MainActivity.searchKeyword = MainActivity.wordInputView.getText().toString();
+            String urlSpeech8 = "https://translate.google.com.tw/?hl=zh-TW#view=home&op=translate&sl=es&tl=zh-TW&text="+MainActivity.searchKeyword;
+            webViewBrowser.loadUrl(urlSpeech8);
+            webViewBrowser.setVisibility(View.VISIBLE);
+
         }
 
     }
